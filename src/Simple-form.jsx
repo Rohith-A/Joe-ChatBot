@@ -3,11 +3,14 @@ import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
 import Review from './Review-form';
 import Container from '@mui/material/Container';
+import { nameParser } from './CommonUtility';
+import ReviewForm from './ReviewForm';
 // all available config props
 const config ={
   width: "500px",
   height: "500px", 
-  headerTitle:  'Check your BMI'
+  headerTitle:  'Check your BMI',
+  // floating: true
 };
 const avatarStyles = {
   width: "40px",
@@ -39,25 +42,25 @@ class SimpleForm extends Component {
       steps={[
         {
           id: '1',
-          message: 'Hi, this is Joe. What is your name?',
+          message: 'Hi, this is Joe 😊. What is your name?',
           trigger: 'name',
   
         },
         {
           id: 'name',
           user: true,
-          trigger: '3',
+          trigger: '3'
         },
         {
           id: '3',
-          message: 'Hi {previousValue}! What is your gender?',
+          message: ({ previousValue, steps }) => `Hi ${nameParser(previousValue)}! What is your gender?`,
           trigger: 'gender',
         },
         {
           id: 'gender',
           options: [
-            { value: 'male', label: 'Male', trigger: '5' },
-            { value: 'female', label: 'Female', trigger: '5' },
+            { value: 'Male', label: 'Male', trigger: '5' },
+            { value: 'Female', label: 'Female', trigger: '5' },
           ],
         },
         {
@@ -83,18 +86,50 @@ class SimpleForm extends Component {
         },
         {
           id: '7',
-          message: 'Please enter your height (cm)',
-          trigger: 'height',
+          message: 'Please select an option to enter your height',
+          trigger: 'heightUnits',
         },
         {
-          id: 'height',
+          id: 'heightUnits',
+          options: [
+            { value: 'ft', label: 'Feet', trigger: ({ previousValue, steps }) => 'ft' },
+            { value: 'cm', label: 'Centi meters', trigger: ({ previousValue, steps }) => 'cm' }
+          ],
+        },
+        {
+          id: 'cm',
+          delay: 300,
+          message: 'Please enter your height in cm',
+          trigger: 'heightCm',
+        },
+        {
+          id: 'heightCm',
           user: true,
           trigger: '8',
-          validator: (value) => {
+          validator: (value, steps) => {
             if (isNaN(value)) {
               return 'value must be a number';
-            } else if (value < 0) {
+            } else if (Number(value) < 0) {
               return 'value must be positive';
+            }
+            return true;
+          },
+        },
+        {
+          id: 'ft',
+          delay: 300,
+          message: 'Please enter your height in ft',
+          trigger: 'heightFt',
+        },
+        {
+          id: 'heightFt',
+          user: true,
+          trigger: '8',
+          validator: (value, steps) => {
+            if (isNaN(value)) {
+              return 'value must be a number';
+            } else if (Number(value) > 10) {
+              return `${value} ft! Seriously ?`;
             }
             return true;
           },
@@ -119,71 +154,39 @@ class SimpleForm extends Component {
         },
         {
           id: '9',
-          message: 'Great! Check out your summary',
+          message: 'Great! Check out your BMI',
           trigger: 'review',
         },
         {
           id: 'review',
-          component: <Review />,
+          component: <ReviewForm />,
           asMessage: true,
           trigger: 'update',
         },
         {
           id: 'update',
-          message: 'Would you like to update some field?',
+          message: 'Select below options to update the data/exit',
           trigger: 'update-question',
         },
         {
           id: 'update-question',
           options: [
-            { value: 'yes', label: 'Yes', trigger: 'update-yes' },
-            { value: 'no', label: 'No', trigger: 'end-message' },
+            { value: 'yes', label: 'Reset', trigger: '3' },
+            { value: 'no', label: 'End', trigger: 'end-message' },
+            { value: '', label: 'Update height/weight', trigger: '7' },
           ],
-        },
-        {
-          id: 'update-yes',
-          message: 'What field would you like to update?',
-          trigger: 'update-fields',
-        },
-        {
-          id: 'update-fields',
-          options: [
-            { value: 'name', label: 'Name', trigger: 'update-name' },
-            { value: 'gender', label: 'Gender', trigger: 'update-gender' },
-            { value: 'age', label: 'Age', trigger: 'update-age' },
-            { value: 'height', label: 'Height', trigger: 'update-height' },
-            { value: 'weight', label: 'Weight', trigger: 'update-weight' },
-          ],
-        },
-        {
-          id: 'update-name',
-          update: 'name',
-          trigger: '9',
-        },
-        {
-          id: 'update-gender',
-          update: 'gender',
-          trigger: '9',
-        },
-        {
-          id: 'update-age',
-          update: 'age',
-          trigger: '9',
-        },
-        {
-          id: 'update-height',
-          update: 'height',
-          trigger: '9',
-        },
-        {
-          id: 'update-weight',
-          update: 'weight',
-          trigger: '9',
         },
         {
           id: 'end-message',
-          message: 'Thanks! have a great day!',
-          end: true,
+          message: 'Thanks. have a great day 😃',
+          // end: true,
+          trigger: 'chatOption'
+        },
+        {
+          id: 'chatOption',
+          options: [
+            { value: 'Hi', label: 'Start chat', trigger: '1' }],
+            // end: true
         },
       ]}
         {...config}
