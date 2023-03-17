@@ -1,23 +1,23 @@
 self.__precacheManifest = [
   {
-    "revision": "035aa4360593887ffb6c",
+    "revision": "0adb98e8a5d1a0f6f2d8",
     "url": "/Joe-ChatBot/static/css/main.12139172.chunk.css"
   },
   {
-    "revision": "035aa4360593887ffb6c",
-    "url": "/Joe-ChatBot/static/js/main.df03344b.chunk.js"
+    "revision": "0adb98e8a5d1a0f6f2d8",
+    "url": "/Joe-ChatBot/static/js/main.a1c4d320.chunk.js"
   },
   {
-    "revision": "0bb180a6c8d329e86ec8",
-    "url": "/Joe-ChatBot/static/js/runtime~main.8dccdc76.js"
+    "revision": "47d6ce9c5b1638808322",
+    "url": "/Joe-ChatBot/static/js/runtime~main.e4378cb4.js"
   },
   {
-    "revision": "31ca4ca63a13fb349d11",
-    "url": "/Joe-ChatBot/static/js/2.2fd2317a.chunk.js"
+    "revision": "12cac0eb156d11be23fb",
+    "url": "/Joe-ChatBot/static/js/2.9bcaacfe.chunk.js"
   },
   {
-    "revision": "7172cba3a9d09b71327a",
-    "url": "/Joe-ChatBot/static/js/3.e7d04950.chunk.js"
+    "revision": "219d9ec49d55933018e7",
+    "url": "/Joe-ChatBot/static/js/3.2ce09382.chunk.js"
   },
   {
     "revision": "ebb3e41ba886a4bd5038",
@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/Joe-ChatBot/static/media/bot-avatar.1b8b550d.jpg"
   },
   {
-    "revision": "1dc89c025fb742d0cc6b618c5bbda7da",
+    "revision": "31df6761d120affca43e2ab77120eee8",
     "url": "/Joe-ChatBot/index.html"
   }
 ];
