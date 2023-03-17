@@ -112,7 +112,7 @@ const GeneratePDF = (props) => {
         fontSize: '10px',
         fontWeight: 600
     }} onClick={() => printPdf()}>
-        Print
+        Download Report
         </Button>
         </Container>
         </React.Fragment>
