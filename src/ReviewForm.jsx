@@ -41,12 +41,12 @@ const ReviewForm = (props) => {
 
     const parseHeightCm = () => {
         if (formDetails && formDetails.heightUnits && formDetails.heightUnits.value === 'cm') {
-            if (formDetails.heightCm.value.includes('.')) {
+            if (formDetails.heightCm && formDetails.heightCm.value.includes('.')) {
                 setFormDetails({ ...formDetails, heightFt: { ...formDetails.heightFt, value: convertToCms(formDetails.heightCm.value) } })
                 return convertToCms(formDetails.heightCm.value);
             }
             //   setFormDetails({...formDetails, heightFt: {...formDetails.heightFt, value: convertToCms(formDetails.heightCm.value)}})
-            return formDetails.heightCm.value;
+            return formDetails.heightCm ? formDetails.heightCm.value : 0;
         } else if (formDetails.heightFt && formDetails.heightFt.value) {
             return convertToCms(formDetails.heightFt.value);
         }
@@ -56,7 +56,6 @@ const ReviewForm = (props) => {
         <React.Fragment>
             {Object.keys(formDetails).length && (
                 <React.Fragment>
-                    <Typography>BMI Report</Typography>
                     <Grid container spacing={2}>
                         <Grid item={true} xs={6}>
                             <Typography align="right" variant="h5" style={{ fontWeight: 600, fontSize: '13px' }}>Name :</Typography>
