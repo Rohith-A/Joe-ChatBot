@@ -49,6 +49,16 @@ class SimpleForm extends Component {
         {
           id: 'name',
           user: true,
+          validator: (value) => {
+            if (/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/.test(value))
+              {
+                return true;
+              }
+            else
+              {
+                return'Please input alphabet characters only.';
+              }
+         },
           trigger: '3'
         },
         {
@@ -73,12 +83,10 @@ class SimpleForm extends Component {
           user: true,
           trigger: '7',
           validator: (value) => {
-            if (isNaN(value)) {
-              return 'value must be a number';
-            } else if (value < 0) {
-              return 'value must be positive';
-            } else if (value > 120) {
-              return `${value}? Come on!`;
+            if (!value || isNaN(value)) {
+              return 'Please enter valid number';
+            } else if (Number(value) <= 0 || value > 120) {
+              return `${value}? Come on! 🤷🏻‍♀️`;
             }
 
             return true;
@@ -107,10 +115,10 @@ class SimpleForm extends Component {
           user: true,
           trigger: '8',
           validator: (value, steps) => {
-            if (isNaN(value)) {
-              return 'value must be a number';
-            } else if (Number(value) < 0) {
-              return 'value must be positive';
+            if (!value || isNaN(value)) {
+              return 'Please enter valid number';
+            } else if (Number(value) <= 0) {
+              return `${value} cm! are you kidding me 😒 ?`;
             }
             return true;
           },
@@ -126,10 +134,10 @@ class SimpleForm extends Component {
           user: true,
           trigger: '8',
           validator: (value, steps) => {
-            if (isNaN(value)) {
-              return 'value must be a number';
-            } else if (Number(value) > 10) {
-              return `${value} ft! Seriously ?`;
+            if (!value || isNaN(value)) {
+              return 'Please enter valid number';
+            } else if (Number(value) <= 0 || Number(value) > 10) {
+              return `${value} ft! are you kidding me 😒 ?`;
             }
             return true;
           },
@@ -144,10 +152,10 @@ class SimpleForm extends Component {
           user: true,
           trigger: '9',
           validator: (value) => {
-            if (isNaN(value)) {
+            if (!value || isNaN(value)) {
               return 'value must be a number';
-            } else if (value < 0) {
-              return 'value must be positive';
+            } else if (Number(value) <= 0) {
+              return `${value} kg(s)! are you kidding me 😒 ?`;
             }
             return true;
           },
@@ -172,7 +180,7 @@ class SimpleForm extends Component {
           id: 'update-question',
           options: [
             { value: 'yes', label: 'Reset', trigger: '3' },
-            { value: 'no', label: 'End', trigger: 'end-message' },
+            { value: 'no', label: 'End chat', trigger: 'end-message' },
             { value: '', label: 'Update height/weight', trigger: '7' },
           ],
         },
