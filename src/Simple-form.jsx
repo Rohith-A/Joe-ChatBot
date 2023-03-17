@@ -117,7 +117,7 @@ class SimpleForm extends Component {
           validator: (value, steps) => {
             if (!value || isNaN(value)) {
               return 'Please enter valid number';
-            } else if (Number(value) <= 0) {
+            } else if (Number(value) <= 0 || Number(value) > 274.32) {
               return `${value} cm! are you kidding me 😒 ?`;
             }
             return true;

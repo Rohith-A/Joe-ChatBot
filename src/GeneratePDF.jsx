@@ -93,8 +93,8 @@ const GeneratePDF = (props) => {
             head: [['BMI Score', 'Category']],
             body: [
               ['less than 18.5', 'Under weight'],
-              ['18.5 to 24.9 ', 'Healthy Weight range'],
-              ['25.0 to 29.9', 'overweight range'],
+              ['18.5 to 24.9 ', 'Healthy Weight'],
+              ['25.0 to 29.9', 'over weight'],
               ['30.0 or higher,', 'obese range']
             ],
           })
@@ -108,7 +108,7 @@ const GeneratePDF = (props) => {
         <Container maxWidth="sm" style={{marginTop: '10px'}}> 
         <Button variant="filled" style={{color: '#117dc2',
         background: 'white',
-        padding: '1px',
+        padding: '4px',
         fontSize: '10px',
         fontWeight: 600
     }} onClick={() => printPdf()}>
