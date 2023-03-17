@@ -59,7 +59,8 @@ return 0;
 export const calculateBMI = (formDetails) => {
     let msg = '';
     let height = '';
-    if (formDetails && formDetails.heightFt) {
+    if (formDetails && formDetails.heightUnits && formDetails.heightUnits.value === 'ft'
+    && formDetails.heightFt) {
         height = convertToCms(formDetails.heightFt.value || 0)
     } else {
         height = formDetails.heightCm ? formDetails.heightCm.value : 0;

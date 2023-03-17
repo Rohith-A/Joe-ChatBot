@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { useEffect, useState } from "react";
-import { calculateBMI, convertToCms, convertToFeet, nameParser, parseHeightCm } from './CommonUtility';
+import { calculateBMI, convertToCms, convertToFeet, nameParser } from './CommonUtility';
 import GeneratePDF from './GeneratePDF';
 
 const ReviewForm = (props) => {
@@ -10,8 +10,8 @@ const ReviewForm = (props) => {
     const { steps } = props;
     useEffect(() => {
         if (steps) {
-            const { name, gender, age, weight, heightCm, heightFt } = steps;
-            const formData = { name, gender, age, weight, heightCm, heightFt }
+            const { name, gender, age, weight, heightCm, heightFt, heightUnits } = steps;
+            const formData = { name, gender, age, weight, heightCm, heightFt, heightUnits }
             setFormDetails(formData);
         }
     }, [steps]);
@@ -39,18 +39,18 @@ const ReviewForm = (props) => {
     //     return msg;
     // }
 
-    // const parseHeightCm = () => {
-    //     if (formDetails && formDetails.heightCm && formDetails.heightCm.value) {
-    //         if (formDetails.heightCm.value.includes('.')) {
-    //             setFormDetails({ ...formDetails, heightFt: { ...formDetails.heightFt, value: formDetails.heightCm.value } })
-    //             return convertToCms(formDetails.heightCm.value);
-    //         }
-    //         //   setFormDetails({...formDetails, heightFt: {...formDetails.heightFt, value: convertToCms(formDetails.heightCm.value)}})
-    //         return formDetails.heightCm.value;
-    //     } else if (formDetails.heightFt && formDetails.heightFt.value && !formDetails.heightCm) {
-    //         return convertToCms(formDetails.heightFt.value);
-    //     }
-    // }
+    const parseHeightCm = () => {
+        if (formDetails && formDetails.heightUnits && formDetails.heightUnits.value === 'cm') {
+            if (formDetails.heightCm.value.includes('.')) {
+                setFormDetails({ ...formDetails, heightFt: { ...formDetails.heightFt, value: convertToCms(formDetails.heightCm.value) } })
+                return convertToCms(formDetails.heightCm.value);
+            }
+            //   setFormDetails({...formDetails, heightFt: {...formDetails.heightFt, value: convertToCms(formDetails.heightCm.value)}})
+            return formDetails.heightCm.value;
+        } else if (formDetails.heightFt && formDetails.heightFt.value) {
+            return convertToCms(formDetails.heightFt.value);
+        }
+    }
 
     return (
         <React.Fragment>
@@ -82,7 +82,7 @@ const ReviewForm = (props) => {
                             <Typography align="right" variant="h5" style={{ fontWeight: 600, fontSize: '12px' }}>{'Height (cm) :'}</Typography>
                         </Grid>
                         <Grid item={true} xs={6}>
-                            <Typography align="left" variant="h5" style={{ fontWeight: 600, fontSize: '13px' }}>{parseHeightCm(formDetails) + ' cms'}</Typography>
+                            <Typography align="left" variant="h5" style={{ fontWeight: 600, fontSize: '13px' }}>{parseHeightCm() + ' cms'}</Typography>
                         </Grid>
                         <Grid item={true} xs={6}>
                             <Typography align="right" variant="h5" style={{ fontWeight: 600, fontSize: '12px' }}>{'Height (ft) :'}</Typography>
@@ -90,7 +90,9 @@ const ReviewForm = (props) => {
                         <Grid item={true} xs={6}>
                             <Typography align="left" variant="h5" style={{ fontWeight: 600, fontSize: '13px' }}>
                             {
-                                (formDetails.heightFt && formDetails.heightFt.value) ? formDetails.heightFt.value + ' ft'
+                                (steps && formDetails.heightUnits 
+                                    && formDetails.heightUnits.value !== undefined
+                                    && formDetails.heightUnits.value === 'ft' && formDetails.heightFt) ? formDetails.heightFt.value + ' ft'
                                     : convertToFeet(formDetails.heightCm && formDetails.heightCm.value) + ' ft'}
                                     </Typography>
                         </Grid>
